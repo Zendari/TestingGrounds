@@ -9,6 +9,7 @@
 /**
  * 
  */
+
 UCLASS()
 class TESTINGGROUNDS_API UChooseNextWayPoint : public UBTTaskNode
 {
