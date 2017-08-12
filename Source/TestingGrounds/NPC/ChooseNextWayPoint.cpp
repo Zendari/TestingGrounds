@@ -12,7 +12,7 @@ EBTNodeResult::Type UChooseNextWayPoint::ExecuteTask(UBehaviorTreeComponent& Own
 	auto ControlledPawn =  OwnerComp.GetAIOwner()->GetPawn();
 	auto PatrolRoute = ControlledPawn->FindComponentByClass<UPatrolRoute>();
 	if (!ensure(PatrolRoute)) { return EBTNodeResult::Failed; }
-
+	
 	//Warn if  empty patrol routes
 	auto PatrolPoints = PatrolRoute->GetPatrolPoints();
 	if (PatrolPoints.Num()==0)
