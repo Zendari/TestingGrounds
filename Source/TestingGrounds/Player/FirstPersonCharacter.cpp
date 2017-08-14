@@ -89,6 +89,7 @@ void AFirstPersonCharacter::BeginPlay()
 	
 	//Allow us to fire, in on begin play because we know we have a gun and a projectile at this stage
 	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+
 	if (EnableTouchscreenMovement(InputComponent) == false)
 	{
 		InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
