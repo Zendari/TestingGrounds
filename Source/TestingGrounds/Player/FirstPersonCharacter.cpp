@@ -1,8 +1,8 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "Player/FirstPersonCharacter.h"
-#include "Weapons/BallProjectile.h"
-#include "Weapons/Gun.h"
+#include "../Weapons/BallProjectile.h"
+#include "../Weapons/Gun.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -79,8 +79,20 @@ void AFirstPersonCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
-	//TODO Fix line 83
-	//FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	if (GunBlueprint==NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No GunBlueprint"));
+		return; 
+	}
+	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
+	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	
+	//Allow us to fire, in on begin play because we know we have a gun and a projectile at this stage
+	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+	if (EnableTouchscreenMovement(InputComponent) == false)
+	{
+		InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
+	}
 
 	// Show or hide the two versions of the gun based on whether or not we're using motion controllers.
 	if (bUsingMotionControllers)
@@ -107,10 +119,7 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	//TODO InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::TouchStarted);
-	if (EnableTouchscreenMovement(PlayerInputComponent) == false)
-	{
-		//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AGun::OnFire);
-	}
+	
 
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AFirstPersonCharacter::OnResetVR);
 
@@ -152,7 +161,7 @@ void AFirstPersonCharacter::EndTouch(const ETouchIndex::Type FingerIndex, const 
 	}
 	if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
 	{
-		//TODO OnFire();
+		//Gun->OnFire();
 	}
 	TouchItem.bIsPressed = false;
 }

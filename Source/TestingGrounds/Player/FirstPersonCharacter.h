@@ -15,9 +15,9 @@ class AFirstPersonCharacter : public ACharacter
 	GENERATED_BODY()
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	class USkeletalMeshComponent* Mesh1P;
-
+	
 	/** Gun mesh: VR view (attached to the VR controller directly, no arm, just the actual gun) */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	class USkeletalMeshComponent* VR_Gun;
@@ -36,15 +36,24 @@ class AFirstPersonCharacter : public ACharacter
 
 	/** Motion controller (left hand) */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UMotionControllerComponent* L_MotionController;
+	class UMotionControllerComponent* L_MotionController; 
+	
+	/**Used to spawn the gun*/
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<class AGun> GunBlueprint;
 
+private:
+	AGun* Gun;
+	
 public:
 	AFirstPersonCharacter();
 
 protected:
 	virtual void BeginPlay();
 
+
 public:
+	
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;

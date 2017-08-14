@@ -13,15 +13,14 @@ AGun::AGun()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Create a gun mesh component
-	AI_Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
-	AI_Gun->SetOnlyOwnerSee(false);			// only the owning player will see this mesh
-	AI_Gun->bCastDynamicShadow = false;
-	AI_Gun->CastShadow = false;
+	Gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FP_Gun"));
+	Gun->bCastDynamicShadow = false;
+	Gun->CastShadow = false;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
-	AI_Gun->SetupAttachment(RootComponent);
+	Gun->SetupAttachment(RootComponent);
 
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
-	MuzzleLocation->SetupAttachment(AI_Gun);
+	MuzzleLocation->SetupAttachment(Gun);
 	MuzzleLocation->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
 
 	

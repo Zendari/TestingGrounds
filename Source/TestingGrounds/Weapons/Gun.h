@@ -6,20 +6,24 @@
 #include "GameFramework/Actor.h"
 #include "Gun.generated.h"
 
+//Forward declarations
+class ABallProjectile;
+
+
 UCLASS()
 class TESTINGGROUNDS_API AGun : public AActor
 {
 	GENERATED_BODY()
 	
-	/** Gun mesh: 1st person view (seen only by self) */
+	/** Gun mesh */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	class USkeletalMeshComponent* AI_Gun;
+	class USkeletalMeshComponent* Gun;
 
 	/** Location on gun mesh where projectiles should spawn. */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	class USceneComponent* MuzzleLocation;
-
 	
+
 public:	
 	// Sets default values for this actor's properties
 	AGun();
@@ -29,7 +33,7 @@ public:
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-	TSubclassOf<class ABallProjectile> ProjectileClass;
+	TSubclassOf<ABallProjectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
@@ -38,15 +42,21 @@ public:
 	/** AnimMontage to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage* FireAnimation;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimInstance* AnimInstance;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	
+	
+public:
 	/** Fires a projectile. */
+	UFUNCTION(BlueprintCallable,Category="Fire")
 	void OnFire();
+
+	
 	
 	
 };
