@@ -1,0 +1,9 @@
+NPC_AI_BP: Start blackboard execution
+	   Setting blackboard value
+	   Setting animations
+
+Guard Behavior: Set the look of the AI towards player
+		Set the last know player location to run to
+		Execute Chase player
+		Execute Suspicious Behaviour
+		Execute Patrol Behaviour
