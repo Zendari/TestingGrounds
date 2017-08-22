@@ -2,6 +2,11 @@ NPC_AI_BP: Start blackboard execution
 	   Setting blackboard value
 	   Setting animations
 
+If can see enemy, and within 300m shoot the enemy
+If enemy seen move within 300m the enemy while shooting
+If no enemy move to the last known location of the enemy
+Else go to next patrol point
+
 Guard Behavior: Set the look of the AI towards player
 		Set the last know player location to run to
 		Execute Chase player
