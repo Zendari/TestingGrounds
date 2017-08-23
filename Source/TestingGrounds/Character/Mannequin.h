@@ -23,7 +23,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category="Weapon")
-	void Fire();
+	void PullTrigger();
 
 	/**Used to spawn the gun*/
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
