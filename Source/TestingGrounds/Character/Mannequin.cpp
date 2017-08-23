@@ -36,18 +36,34 @@ void AMannequin::BeginPlay()
 {
 	Super::BeginPlay();
 		//Setting the gun
-	if (GunBlueprint == NULL) 
+	if (GunBlueprint == nullptr) 
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No GunBlueprint"));
 		return;
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
-	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-	Gun->AnimInstance = GetMesh()->GetAnimInstance();
-	//Gun->TP_AnimInstance = GetMesh()->GetAnimInstance();
+
+	if (IsPlayerControlled())
+	{
+		//Attach gun component here, because it doesn't exist yet in the constructor
+		Gun->AttachToComponent(
+			Mesh1P, 
+			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), 
+			TEXT("GripPoint"));
+	}
+	else
+	{
+		Gun->AttachToComponent(
+			GetMesh(), 
+			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), 
+			TEXT("GripPoint_0"));	
+	}
+
+	Gun->FP_AnimInstance = Mesh1P->GetAnimInstance();
+	Gun->TP_AnimInstance = GetMesh()->GetAnimInstance();
 	
 	//Binding the fire input
-	if (InputComponent != NULL)
+	if (InputComponent != nullptr)
 	{
 		InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &AMannequin::PullTrigger);
 	}
@@ -68,8 +84,12 @@ void AMannequin::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
+void AMannequin::Death()
+{
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint_0"));
+}
+
 void AMannequin::PullTrigger()
 {
 	Gun->OnFire();
 }
-

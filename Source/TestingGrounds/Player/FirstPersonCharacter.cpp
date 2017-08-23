@@ -88,7 +88,7 @@ void AFirstPersonCharacter::BeginPlay()
 	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 	
 	//Allow us to fire, in on begin play because we know we have a gun and a projectile at this stage
-	Gun->AnimInstance = Mesh1P->GetAnimInstance();
+	Gun->FP_AnimInstance = Mesh1P->GetAnimInstance();
 
 	if (EnableTouchscreenMovement(InputComponent) == false)
 	{

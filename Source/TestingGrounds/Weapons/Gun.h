@@ -39,12 +39,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class USoundBase* FireSound;
 
-	/** AnimMontage to play each time player fire */
+	/** AnimMontage to play each time player fires */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimMontage* FireAnimation;
+	class UAnimMontage* FP_FireAnimation;
 
+	/** AnimMontage to play each time AI fires */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	class UAnimInstance* AnimInstance;
+	class UAnimMontage* TP_FireAnimation;
+
+	UPROPERTY()
+	class UAnimInstance* FP_AnimInstance;
+
+	UPROPERTY()
+	class UAnimInstance* TP_AnimInstance;
 
 protected:
 	// Called when the game starts or when spawned
@@ -55,6 +62,5 @@ public:
 	/** Fires a projectile. */
 	UFUNCTION(BlueprintCallable,Category="Fire")
 	void OnFire();
-
 
 };

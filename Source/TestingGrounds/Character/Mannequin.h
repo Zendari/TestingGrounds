@@ -22,6 +22,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//When player dies, reattach the gun to Mesh
+	UFUNCTION(BlueprintCallable, Category = "Death")
+	void Death();
+
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void PullTrigger();
 
@@ -37,11 +41,11 @@ protected:
 private:
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class UCameraComponent* FirstPersonCameraComponent;
+	class UCameraComponent* FirstPersonCameraComponent;
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		class USkeletalMeshComponent* Mesh1P;
+	class USkeletalMeshComponent* Mesh1P;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon", meta = (AllowPrivateAccess = "true"))
 	AGun* Gun;

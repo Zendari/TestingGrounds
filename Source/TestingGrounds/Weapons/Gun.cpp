@@ -2,7 +2,6 @@
 
 #include "Gun.h"
 #include "Weapons/BallProjectile.h"
-#include "../Character/Mannequin.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Animation/AnimInstance.h"
@@ -23,7 +22,7 @@ AGun::AGun()
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	MuzzleLocation->SetupAttachment(Gun);
 	MuzzleLocation->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
-
+	
 	
 }
 
@@ -63,19 +62,20 @@ void AGun::OnFire()
 	}
 
 	// try and play the sound if specified
-	if (FireSound != NULL)
+	if (FireSound != NULL )
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
 	}
 
 	// try and play a firing animation if specified
-	if (FireAnimation != NULL )
+	if (FP_FireAnimation != nullptr && FP_AnimInstance != nullptr)
 	{
 		// Get the animation object for the arms mesh
-		if (AnimInstance != NULL)
-		{
-			AnimInstance->Montage_Play(FireAnimation, 1.f);
-		}
+		FP_AnimInstance->Montage_Play(FP_FireAnimation, 1.f);
 	}
-	
+
+	if (TP_FireAnimation != nullptr && TP_AnimInstance != nullptr)
+	{
+		TP_AnimInstance->Montage_Play(TP_FireAnimation, 1.f);
+	}
 }
