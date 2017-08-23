@@ -39,7 +39,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class USoundBase* FireSound;
 
-	/** AnimMontage to play each time we fire */
+	/** AnimMontage to play each time player fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage* FireAnimation;
 
@@ -56,7 +56,5 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Fire")
 	void OnFire();
 
-	
-	
-	
+
 };

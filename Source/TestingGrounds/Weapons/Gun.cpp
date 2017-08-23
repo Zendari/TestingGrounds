@@ -2,6 +2,7 @@
 
 #include "Gun.h"
 #include "Weapons/BallProjectile.h"
+#include "../Character/Mannequin.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Animation/AnimInstance.h"
@@ -68,7 +69,7 @@ void AGun::OnFire()
 	}
 
 	// try and play a firing animation if specified
-	if (FireAnimation != NULL)
+	if (FireAnimation != NULL )
 	{
 		// Get the animation object for the arms mesh
 		if (AnimInstance != NULL)
@@ -76,4 +77,5 @@ void AGun::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+	
 }

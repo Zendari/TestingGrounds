@@ -43,8 +43,9 @@ void AMannequin::BeginPlay()
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
 	Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-	Gun->AnimInstance = Mesh1P->GetAnimInstance();
-
+	Gun->AnimInstance = GetMesh()->GetAnimInstance();
+	//Gun->TP_AnimInstance = GetMesh()->GetAnimInstance();
+	
 	//Binding the fire input
 	if (InputComponent != NULL)
 	{
