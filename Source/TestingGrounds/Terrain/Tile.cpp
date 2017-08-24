@@ -16,9 +16,11 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 {
 	int ActorsToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 	
+	//Spawning Actors loop
 	for(size_t i = 0 ; i <= ActorsToSpawn ; i++) 
 	{
 		FVector SpawnPoint;
+		//Checking we can spawn at this Spawnpoint
 		bool bFound = FindEmptyLocation(SpawnPoint, Radius);
 		if (bFound)
 		{
@@ -35,9 +37,13 @@ bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 	const int MAX_TRIES = 100;
 	for (int i = 0; i <= MAX_TRIES; i++)
 	{
+		//Generating random Testpoint in the tile
 		FVector TestPoint = FMath::RandPointInBox(BoxBounds);
-		if (CanSpawnAt(TestPoint,Radius))
+		
+		// if the Testpoint didn't hit anything
+		if (CanSpawnAt(TestPoint,Radius)) 
 		{
+			//The Testpoint is valid
 			OutLocation = TestPoint;
 			return true;
 		}
@@ -68,7 +74,11 @@ void ATile::Tick(float DeltaTime)
 bool ATile::CanSpawnAt(FVector Location, float Radius)
 {
 	FHitResult HitResult;
+
+	//Used to make points across all the tiles, not only the first one
 	FVector GlobalLocation = ActorToWorld().TransformPosition(Location);
+
+	//If this bool is true, we have hit something
 	bool HasHit = GetWorld()->SweepSingleByChannel(
 		HitResult,
 		GlobalLocation,
@@ -77,7 +87,7 @@ bool ATile::CanSpawnAt(FVector Location, float Radius)
 		ECollisionChannel::ECC_GameTraceChannel2,
 		FCollisionShape::MakeSphere(Radius)
 	);
-	//HasHit is false, return Red. HasHit is true return Green
+	//HasHit is true, return Red. HasHit is false return Green
 	// A ? B : C : Is A true, if yes return B, if not return C
 	FColor ResultColor = HasHit ? FColor::Red : FColor::Green;
 	DrawDebugCapsule(GetWorld(), GlobalLocation, 0, Radius, FQuat::Identity, ResultColor, true, 100);
