@@ -16,7 +16,9 @@ public:
 	ATile();
 
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
-		void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
+
+	
 
 protected:
 	// Called when the game starts or when spawned

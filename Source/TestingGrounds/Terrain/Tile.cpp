@@ -3,7 +3,7 @@
 #include "Tile.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
 // Sets default values
 ATile::ATile()
 {
@@ -25,11 +25,11 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 		if (bFound)
 		{
 			float RandomRotation = FMath::RandRange(-180.f, 180.f);
-			
 			PlaceActor(ToSpawn, SpawnPoint,RandomRotation,RandomScale);
 		}	
 	}
 }
+
 
 bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 {
