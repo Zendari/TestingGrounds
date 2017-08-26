@@ -30,6 +30,8 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
+	FVector NavMeshBoundsOffset;
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
 	FVector MinExtent;
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
