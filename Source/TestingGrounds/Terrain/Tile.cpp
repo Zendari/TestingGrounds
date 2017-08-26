@@ -3,7 +3,8 @@
 #include "Tile.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-#include "Components/HierarchicalInstancedStaticMeshComponent.h"
+
+
 // Sets default values
 ATile::ATile()
 {
@@ -66,6 +67,7 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Ro
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 // Called every frame
