@@ -18,7 +18,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
 	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
 
-	
+	UFUNCTION(BlueprintCallable, Category = "Pool")
+	void SetPool(UActorPool* InPool);
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,4 +37,5 @@ private:
 
 	bool CanSpawnAt(FVector Location, float Radius);
 	
+	class UActorPool* Pool;
 };
