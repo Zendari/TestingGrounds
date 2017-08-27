@@ -15,7 +15,25 @@ struct FSpawnPosition
 	float Scale;
 };
 
+USTRUCT(BlueprintType)
+struct FSpawnArguments
+{
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditDefaultsOnly, Category = "FSpawnArguments")
+	int MinSpawn = 1;
 
+	UPROPERTY(EditDefaultsOnly, Category = "FSpawnArguments")
+	int MaxSpawn = 1;
+
+	UPROPERTY(EditDefaultsOnly, Category = "FSpawnArguments")
+	float Radius = 500;
+
+	UPROPERTY(EditDefaultsOnly, Category = "FSpawnArguments")
+	float MinScale = 1; 
+
+	UPROPERTY(EditDefaultsOnly, Category = "FSpawnArguments")
+	float MaxScale = 1;
+};
 
 UCLASS()
 class TESTINGGROUNDS_API ATile : public AActor
@@ -27,13 +45,10 @@ public:
 	ATile();
 
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
-	void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500, float MinScale = 1, float MaxScale = 1);
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, FSpawnArguments SpawnArgs );
 
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
-
-	
-	
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,9 +59,11 @@ protected:
 	//Offset of the navmesh
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	FVector NavMeshBoundsOffset;
+
 	//Size of the tile, set defaults at constructor
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
 	FVector MinExtent;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
 	FVector MaxExtent;
 
@@ -62,7 +79,8 @@ private:
 
 	bool CanSpawnAt(FVector Location, float Radius);
 
-	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale);
+	//Array of SpawnPosition to spawn the actors
+	TArray<FSpawnPosition> RandomSpawnPositions(FSpawnArguments SpawnArgs);
 	
 	void PositionNavMeshBoundsVolume();
 	
