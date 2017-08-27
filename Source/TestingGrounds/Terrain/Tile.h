@@ -45,7 +45,10 @@ public:
 	ATile();
 
 	UFUNCTION(BlueprintCallable, Category = "Spawn")
-	void PlaceActors(TSubclassOf<AActor> ToSpawn, FSpawnArguments SpawnArgs );
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, const FSpawnArguments& SpawnArgs );
+
+	UFUNCTION(BlueprintCallable, Category = "Spawn")
+	void PlaceAIPawns(TSubclassOf<APawn> ToSpawn, const FSpawnArguments& SpawnArgs);
 
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void SetPool(UActorPool* InPool);
@@ -76,6 +79,8 @@ private:
 	bool FindEmptyLocation(FVector &OutLocation,float Radius);
 
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition);
+
+	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition);
 
 	bool CanSpawnAt(FVector Location, float Radius);
 
