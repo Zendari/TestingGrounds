@@ -34,32 +34,56 @@ void ATile::PositionNavMeshBoundsVolume()
 		UE_LOG(LogTemp, Warning, TEXT("[%s] No more navmesh in pool"),*GetName());
 		return;
 	}
+
 	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out:{%s}"),*GetName(),*NavMeshVolume->GetName());
-	NavMeshVolume->SetActorLocation(GetActorLocation()+NavMeshBoundsOffset);
-	GetWorld()->GetNavigationSystem()->Build();
+	//Center the navmesh onto the tile
+	NavMeshVolume->SetActorLocation(GetActorLocation() + NavMeshBoundsOffset);
+	//Used to build the navmesh
+	GetWorld()->GetNavigationSystem()->Build(); 
 }
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
 {
-	int ActorsToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
-	//Spawning Actors loop
-	for(size_t i = 0 ; i <= ActorsToSpawn ; i++) 
+	//TODO change args to struct
+	TArray<FSpawnPosition> PositionArray = RandomSpawnPositions (MinSpawn, MaxSpawn,Radius, MinScale,  MaxScale);
+	for (FSpawnPosition SpawnPosition : PositionArray)
 	{
-		FVector SpawnPoint;
-		float RandomScale = FMath::RandRange(MinScale,MaxScale);
+		PlaceActor(ToSpawn, SpawnPosition);
+	}
+}
+
+void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition)
+{
+	//Place an actor with some properties
+	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
+	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+}
+
+TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
+{
+	int ActorsToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
+	TArray<FSpawnPosition> PositionArray;
+	//Spawning Actors loop
+	for (size_t i = 0; i <= ActorsToSpawn; i++)
+	{
+		FSpawnPosition SpawnPosition;
+		SpawnPosition.Scale = FMath::RandRange(MinScale, MaxScale);
 		//Checking we can spawn at this Spawnpoint
-		bool bFound = FindEmptyLocation(SpawnPoint, Radius * RandomScale);
+		bool bFound = FindEmptyLocation(SpawnPosition.Location, Radius * SpawnPosition.Scale);
 		if (bFound)
 		{
-			float RandomRotation = FMath::RandRange(-180.f, 180.f);
-			PlaceActor(ToSpawn, SpawnPoint,RandomRotation,RandomScale);
-		}	
+			SpawnPosition.Rotation = FMath::RandRange(-180.f, 180.f);
+			PositionArray.Push(SpawnPosition);
+		}
 	}
+	return PositionArray;
 }
 
 bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 {
-	
 	FBox BoxBounds(MinExtent, MaxExtent);
 	const int MAX_TRIES = 100;
 	for (int i = 0; i <= MAX_TRIES; i++)
@@ -78,14 +102,7 @@ bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 	return false;
 }
 
-void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale)
-{
-	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
-	Spawned->SetActorRelativeLocation(SpawnPoint);
-	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-	Spawned->SetActorRotation(FRotator(0, Rotation, 0));
-	Spawned->SetActorScale3D(FVector(Scale));
-}
+
 
 // Called when the game starts or when spawned
 void ATile::BeginPlay()
@@ -96,6 +113,7 @@ void ATile::BeginPlay()
 
 void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	//Called when Tile destroyed
 	Pool->Return(NavMeshVolume);
 }
 
@@ -126,4 +144,6 @@ bool ATile::CanSpawnAt(FVector Location, float Radius)
 	// A ? B : C : Is A true, if yes return B, if not return C
 	return !HasHit;
 }
+
+
 

@@ -6,6 +6,17 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+USTRUCT()
+struct FSpawnPosition
+{
+	GENERATED_USTRUCT_BODY()
+	FVector Location;
+	float Rotation;
+	float Scale;
+};
+
+
+
 UCLASS()
 class TESTINGGROUNDS_API ATile : public AActor
 {
@@ -30,8 +41,10 @@ protected:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+	//Offset of the navmesh
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 	FVector NavMeshBoundsOffset;
+	//Size of the tile, set defaults at constructor
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
 	FVector MinExtent;
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
@@ -45,12 +58,15 @@ private:
 
 	bool FindEmptyLocation(FVector &OutLocation,float Radius);
 
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition);
 
 	bool CanSpawnAt(FVector Location, float Radius);
+
+	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale);
 	
 	void PositionNavMeshBoundsVolume();
 	
+	//Component holding the navmeshes
 	class UActorPool* Pool;
 
 	AActor* NavMeshVolume;

@@ -24,6 +24,7 @@ public:
 
 protected: 
 	
+	//NavMeshBoundsVolume pool component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pool")
 	class UActorPool* NavMeshBoundsVolumePool;
 

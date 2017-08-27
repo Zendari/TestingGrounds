@@ -21,12 +21,13 @@ AActor* UActorPool::Checkout()
 	{
 		return nullptr;
 	}
-
+	//Return element type of the array
 	return Pool.Pop(true);
 }
 
 void UActorPool::Add(AActor* ActorToAdd)
 {
+	//Add Actor to the pool
 	if (ActorToAdd == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Added null actor"), *GetName());
