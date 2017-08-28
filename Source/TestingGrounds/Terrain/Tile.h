@@ -78,15 +78,15 @@ private:
 
 	bool FindEmptyLocation(FVector &OutLocation,float Radius);
 
+	template<class T>
+	void RandomlyPlaceActors(TSubclassOf<T> ToSpawn, const FSpawnArguments& SpawnArgs);
+
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition);
 
-	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition);
+	void PlaceActor(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition);
 
 	bool CanSpawnAt(FVector Location, float Radius);
 
-	//Array of SpawnPosition to spawn the actors
-	TArray<FSpawnPosition> RandomSpawnPositions(FSpawnArguments SpawnArgs);
-	
 	void PositionNavMeshBoundsVolume();
 	
 	//Component holding the navmeshes
@@ -94,3 +94,5 @@ private:
 
 	AActor* NavMeshVolume;
 };
+
+
