@@ -68,12 +68,11 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnP
 
 void ATile::PlaceActor(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition)
 {
-	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
+	FRotator Rotation = FRotator(0, SpawnPosition.Rotation, 0);
+	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn,SpawnPosition.Location,Rotation);
 	if(Spawned)
 	{
-		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 		Spawned->SpawnDefaultController();
 		Spawned->Tags.Add(FName("Enemy"));
 	}
@@ -127,8 +126,11 @@ void ATile::BeginPlay()
 
 void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	//Called when Tile destroyed
-	Pool->Return(NavMeshVolume);
+	if(Pool != nullptr && NavMeshVolume != nullptr)
+	{
+		//Called when Tile destroyed
+		Pool->Return(NavMeshVolume);
+	}
 }
 
 // Called every frame

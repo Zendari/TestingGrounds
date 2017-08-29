@@ -19,17 +19,16 @@ class TESTINGGROUNDS_API AGun : public AActor
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	class USkeletalMeshComponent* Gun;
 
-	/** Location on gun mesh where projectiles should spawn. */
-	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-	class USceneComponent* MuzzleLocation;
-	
-
 public:	
 	// Sets default values for this actor's properties
 	AGun();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	/** Location on gun mesh where projectiles should spawn. */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	class USceneComponent* MuzzleLocation;
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
