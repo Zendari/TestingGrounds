@@ -24,6 +24,7 @@ void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()
 	}
 }
 
+
 void AInfiniteTerrainGameMode::AddToPool(class ANavMeshBoundsVolume* BoundsVolumeToAdd)
 {
 	NavMeshBoundsVolumePool->Add(BoundsVolumeToAdd); // will actually add the object into the pool's component
