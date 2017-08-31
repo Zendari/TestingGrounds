@@ -18,11 +18,8 @@ ATile::ATile()
 
 void ATile::SetPool(UActorPool* InPool)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Setting the pool : %s"),*InPool->GetName());
 	Pool = InPool;
-
 	PositionNavMeshBoundsVolume();
-
 }
 
 void ATile::PositionNavMeshBoundsVolume()
@@ -31,11 +28,9 @@ void ATile::PositionNavMeshBoundsVolume()
 
 	if (!NavMeshVolume)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] No more navmesh in pool"),*GetName());
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out:{%s}"),*GetName(),*NavMeshVolume->GetName());
 	//Center the navmesh onto the tile
 	NavMeshVolume->SetActorLocation(GetActorLocation() + NavMeshBoundsOffset);
 	//Used to build the navmesh

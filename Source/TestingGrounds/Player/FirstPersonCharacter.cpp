@@ -81,7 +81,6 @@ void AFirstPersonCharacter::BeginPlay()
 	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
 	if (GunBlueprint==NULL)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No GunBlueprint"));
 		return; 
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);

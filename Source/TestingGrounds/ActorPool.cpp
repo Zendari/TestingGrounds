@@ -30,7 +30,6 @@ void UActorPool::Add(AActor* ActorToAdd)
 	//Add Actor to the pool
 	if (ActorToAdd == nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Added null actor"), *GetName());
 		return;
 	}
 	Pool.Push(ActorToAdd);

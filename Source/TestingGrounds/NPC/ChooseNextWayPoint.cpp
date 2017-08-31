@@ -17,7 +17,6 @@ EBTNodeResult::Type UChooseNextWayPoint::ExecuteTask(UBehaviorTreeComponent& Own
 	auto PatrolPoints = PatrolRoute->GetPatrolPoints();
 	if (PatrolPoints.Num()==0)
 	{ 
-		UE_LOG(LogTemp, Warning, TEXT("No Patrol points")); 
 		return EBTNodeResult::Failed;
 	}
 	

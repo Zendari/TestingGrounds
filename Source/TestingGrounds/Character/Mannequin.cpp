@@ -38,7 +38,6 @@ void AMannequin::BeginPlay()
 		//Setting the gun
 	if (GunBlueprint == nullptr) 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No GunBlueprint"));
 		return;
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
