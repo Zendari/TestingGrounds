@@ -92,3 +92,4 @@ void AMannequin::PullTrigger()
 {
 	Gun->OnFire();
 }
+

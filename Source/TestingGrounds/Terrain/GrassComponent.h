@@ -23,7 +23,6 @@ public :
 	UPROPERTY(EditDefaultsOnly, Category = "Spawn")
 	int SpawnCount;
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 protected:
 

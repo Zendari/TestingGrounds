@@ -48,31 +48,6 @@ void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, const FSpawnArguments& Spaw
 	RandomlyPlaceActors(ToSpawn, SpawnArgs);
 }
 
-void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition)
-{
-	//Place an actor with some properties
-	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
-	if (Spawned)
-	{
-		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
-		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
-		Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
-	}
-}
-
-void ATile::PlaceActor(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition)
-{
-	FRotator Rotation = FRotator(0, SpawnPosition.Rotation, 0);
-	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn,SpawnPosition.Location,Rotation);
-	if(Spawned)
-	{
-		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-		Spawned->SpawnDefaultController();
-		Spawned->Tags.Add(FName("Enemy"));
-	}
-}
-
 template<class T>
 void ATile::RandomlyPlaceActors(TSubclassOf<T> ToSpawn, const FSpawnArguments& SpawnArgs)
 {
@@ -89,6 +64,31 @@ void ATile::RandomlyPlaceActors(TSubclassOf<T> ToSpawn, const FSpawnArguments& S
 			SpawnPosition.Rotation = FMath::RandRange(-180.f, 180.f);
 			PlaceActor(ToSpawn, SpawnPosition);
 		}
+	}
+}
+
+void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition)
+{
+	//Place an actor with some properties
+	AActor* Spawned = GetWorld()->SpawnActor(ToSpawn);
+	if (Spawned)
+	{
+		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+		Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+	}
+}
+
+void ATile::PlaceActor(TSubclassOf<APawn> ToSpawn, const FSpawnPosition& SpawnPosition)
+{
+	FRotator Rotation = FRotator(0, SpawnPosition.Rotation, 0);
+	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn, SpawnPosition.Location, Rotation);
+	if (Spawned)
+	{
+		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+		Spawned->SpawnDefaultController();
+		Spawned->Tags.Add(FName("Enemy"));
 	}
 }
 

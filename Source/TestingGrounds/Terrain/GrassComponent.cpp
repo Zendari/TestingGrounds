@@ -18,13 +18,6 @@ void UGrassComponent::BeginPlay()
 	SpawnGrass();
 }
 
-void UGrassComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
-	// ...
-}
-
 void UGrassComponent::SpawnGrass()
 {
 	for (int i = 0; i <= SpawnCount; i++)
