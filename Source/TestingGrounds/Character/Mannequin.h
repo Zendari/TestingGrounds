@@ -26,13 +26,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Death")
 	void Death();
 
-	UFUNCTION(BlueprintCallable, Category="Weapon")
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void PullTrigger();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void Reload();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	float GetAmmo();
 
 	/**Used to spawn the gun*/
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<class AGun> GunBlueprint;
 
+	/*Amount of Ammo*/
+	UPROPERTY(VisibleAnywhere, Category = "Weapon")
+	float AmmoNumber;
 
 protected:
 	// Called when the game starts or when spawned

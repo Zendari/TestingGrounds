@@ -29,6 +29,7 @@ AMannequin::AMannequin()
 	Mesh1P->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
 	Mesh1P->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
 
+	AmmoNumber = 25;
 }
 
 // Called when the game starts or when spawned
@@ -90,6 +91,23 @@ void AMannequin::Death()
 
 void AMannequin::PullTrigger()
 {
-	Gun->OnFire();
+	if(AmmoNumber > 0)
+	{
+		Gun->OnFire();
+		AmmoNumber--;
+	}
+	else
+	{
+		return;
+	}
 }
 
+void AMannequin::Reload()
+{
+	AmmoNumber = 25;
+}
+
+float AMannequin::GetAmmo()
+{
+	return AmmoNumber;
+}
