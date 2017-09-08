@@ -44,7 +44,6 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, const FSpawnArguments& Spaw
 
 void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, const FSpawnArguments& SpawnArgs)
 {
-
 	RandomlyPlaceActors(ToSpawn, SpawnArgs);
 }
 
@@ -116,7 +115,6 @@ bool ATile::FindEmptyLocation(FVector &OutLocation, float Radius)
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -132,7 +130,6 @@ void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ATile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 bool ATile::CanSpawnAt(FVector Location, float Radius)
@@ -152,7 +149,7 @@ bool ATile::CanSpawnAt(FVector Location, float Radius)
 		FCollisionShape::MakeSphere(Radius)
 	);
 	//HasHit is true, return Red. HasHit is false return Green
-	// A ? B : C : Is A true, if yes return B, if not return C
+	// A ? B : C : Is A true?, if yes return B, if not return C
 	return !HasHit;
 }
 

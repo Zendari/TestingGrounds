@@ -14,7 +14,6 @@ UGrassComponent::UGrassComponent()
 void UGrassComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SpawnGrass();
 }
 

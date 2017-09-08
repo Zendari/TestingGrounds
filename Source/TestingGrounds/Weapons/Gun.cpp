@@ -21,8 +21,8 @@ AGun::AGun()
 
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	MuzzleLocation->SetupAttachment(Gun);
+	//Might help fix the aim issue
 	MuzzleLocation->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
-	
 	
 }
 
@@ -30,14 +30,12 @@ AGun::AGun()
 void AGun::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
 void AGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AGun::OnFire()

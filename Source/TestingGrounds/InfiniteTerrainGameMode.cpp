@@ -10,7 +10,6 @@
 AInfiniteTerrainGameMode::AInfiniteTerrainGameMode()
 {
 	NavMeshBoundsVolumePool = CreateDefaultSubobject<UActorPool>(FName("NavMesh Bounds Volume Pool"));
-	
 }
 
 void AInfiniteTerrainGameMode::PopulateBoundsVolumePool()

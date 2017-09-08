@@ -20,7 +20,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 	void PopulateBoundsVolumePool();
 
-	class ATile* Tile;
 
 protected: 
 	
